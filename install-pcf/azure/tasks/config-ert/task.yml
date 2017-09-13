@@ -122,4 +122,4 @@ inputs:
   - name: pcf-pipelines
 
 run:
-  path: pcf-pipelines/tasks/config-ert/task.sh
+  path: pcf-pipelines/install-pcf/azure/tasks/config-ert/task.sh

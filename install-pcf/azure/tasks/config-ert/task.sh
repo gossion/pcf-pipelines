@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -eux
 
 source pcf-pipelines/functions/generate_cert.sh
 
@@ -424,7 +424,6 @@ cf_resources=$(
     --argjson loggregator_tc_instances $LOGGREGATOR_TC_INSTANCES \
     --argjson tcp_router_instances $TCP_ROUTER_INSTANCES \
     --argjson syslog_adapter_instances $SYSLOG_ADAPTER_INSTANCES \
-    --argjson syslog_scheduler_instances $SYSLOG_SCHEDULER_INSTANCES \
     --argjson doppler_instances $DOPPLER_INSTANCES \
     --arg ha_proxy_elb_name "$HA_PROXY_LB_NAME" \
     --arg router_elb_name "$ROUTER_LB_NAME" \
@@ -473,17 +472,9 @@ cf_resources=$(
     |
 
     if $ha_proxy_elb_name != "" then
-      .ha_proxy |= . + { "load_balancer": $ha_proxy_elb_name }
+      .ha_proxy |= . + { "elb_names": [ $ha_proxy_elb_name ] }
     else
-      .
-    end
-
-    |
-
-    if $router_elb_name != "" then
-      .router |= . + { "load_balancer": $router_elb_name }
-    else
-      .
+      .router |= . + { "elb_names": [ "\($terraform_prefix)-web-lb" ] }
     end
 
     |
