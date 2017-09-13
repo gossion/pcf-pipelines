@@ -124,6 +124,12 @@ cf_properties=$(
       ".cloud_controller.allow_app_ssh_access": {
         "value": $allow_app_ssh_access
       },
+      ".ha_proxy.static_ips": {
+        "value": $ha_proxy_ips
+      },
+      ".ha_proxy.skip_cert_verify": {
+        "value": $skip_cert_verify
+      },
       ".router.static_ips": {
         "value": $router_static_ips
       },
@@ -418,6 +424,7 @@ cf_resources=$(
     --argjson loggregator_tc_instances $LOGGREGATOR_TC_INSTANCES \
     --argjson tcp_router_instances $TCP_ROUTER_INSTANCES \
     --argjson syslog_adapter_instances $SYSLOG_ADAPTER_INSTANCES \
+    --argjson syslog_scheduler_instances $SYSLOG_SCHEDULER_INSTANCES \
     --argjson doppler_instances $DOPPLER_INSTANCES \
     --arg ha_proxy_elb_name "$HA_PROXY_LB_NAME" \
     --arg router_elb_name "$ROUTER_LB_NAME" \
