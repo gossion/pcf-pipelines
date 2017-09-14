@@ -3,7 +3,7 @@ set -ex
 
 #TODO: if pcf_ert_domain configured
 cd terraform-state
-  web_lb_public_ip=$(terraform output --json -state *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.web-lb-public-ip"] .primary .attributes .ip_address')
+  web_lb_public_ip=$(cat *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.web-lb-public-ip"] .primary .attributes .ip_address')
   pcf_ert_domain="${web_lb_public_ip}.cf.pcfazure.com"
 cd -
 
