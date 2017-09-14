@@ -1,12 +1,16 @@
 #!/bin/bash
-set -e
+set -ex
 
 echo "=============================================================================================="
 echo "Configuring OpsManager @ https://opsman.${PCF_ERT_DOMAIN} ..."
 echo "=============================================================================================="
 
+cd terraform-state
+  opsman_public_ip=$(terraform output --json -state *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.opsman-public-ip"] .primary .attributes .ip_address')
+cd -
+
 #Configure Opsman
-om-linux --target https://opsman.${PCF_ERT_DOMAIN} -k \
+om-linux --target https://opsman.${opsman_public_ip} -k \
   configure-authentication \
   --username "${PCF_OPSMAN_ADMIN}" \
   --password "${PCF_OPSMAN_ADMIN_PASSWORD}" \

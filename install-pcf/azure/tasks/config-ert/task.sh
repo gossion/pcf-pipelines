@@ -2,6 +2,14 @@
 
 set -eux
 
+
+#TODO: if system_domain configured
+cd terraform-state
+  web_lb_public_ip=$(terraform output --json -state *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.web-lb-public-ip"] .primary .attributes .ip_address')
+  SYSTEM_DOMAIN="system.${web_lb_public_ip}.cf.pcfazure.com"
+  APPS_DOMAIN="apps.${web_lb_public_ip}.cf.pcfazure.com"
+cd -
+
 source pcf-pipelines/functions/generate_cert.sh
 
 if [[ -z "$SSL_CERT" ]]; then
@@ -474,7 +482,7 @@ cf_resources=$(
     if $ha_proxy_elb_name != "" then
       .ha_proxy |= . + { "elb_names": [ $ha_proxy_elb_name ] }
     else
-      .router |= . + { "elb_names": [ "\($terraform_prefix)-web-lb" ] }
+      .router |= . + { "elb_names": [ "\($AZURE_TERRAFORM_PREFIX)-web-lb" ] }
     end
 
     |
