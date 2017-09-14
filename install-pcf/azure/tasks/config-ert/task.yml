@@ -121,6 +121,7 @@ params:
 
 inputs:
   - name: pcf-pipelines
+  - name: terraform-state
 
 run:
   path: pcf-pipelines/install-pcf/azure/tasks/config-ert/task.sh
