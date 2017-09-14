@@ -1,5 +1,10 @@
 #!/bin/bash
-set -eu
+set -eux
+
+
+cd terraform-state
+  OPSMAN_DOMAIN_OR_IP_ADDRESS=$(cat *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.opsman-public-ip"] .primary .attributes .ip_address')
+cd -
 
 echo "=============================================================================================="
 echo "Configuring Director @ https://${OPSMAN_DOMAIN_OR_IP_ADDRESS} ..."

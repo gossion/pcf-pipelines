@@ -5,11 +5,6 @@ echo "==========================================================================
 echo "Configuring OpsManager @ https://opsman.${PCF_ERT_DOMAIN} ..."
 echo "=============================================================================================="
 
-pwd
-echo 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-ls -lh
-
-
 cd terraform-state
   opsman_public_ip=$(cat *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.opsman-public-ip"] .primary .attributes .ip_address')
 cd -
