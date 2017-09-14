@@ -450,6 +450,7 @@ cf_resources=$(
     --arg diego_brain_nsx_lb_pool_name "${DIEGO_BRAIN_NSX_LB_POOL_NAME}" \
     --arg diego_brain_nsx_lb_security_group "${DIEGO_BRAIN_NSX_LB_SECURITY_GROUP}" \
     --arg diego_brain_nsx_lb_port "${DIEGO_BRAIN_NSX_LB_PORT}" \
+    --arg azure_terraform_prefix "${AZURE_TERRAFORM_PREFIX}" \
     '
     {
       "consul_server": { "instances": $consul_server_instances },
@@ -482,7 +483,7 @@ cf_resources=$(
     if $ha_proxy_elb_name != "" then
       .ha_proxy |= . + { "elb_names": [ $ha_proxy_elb_name ] }
     else
-      .router |= . + { "elb_names": [ "\($AZURE_TERRAFORM_PREFIX)-web-lb" ] }
+      .router |= . + { "elb_names": [ "\($azure_terraform_prefix)-web-lb" ] }
     end
 
     |
