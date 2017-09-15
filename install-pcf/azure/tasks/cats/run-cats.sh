@@ -71,7 +71,7 @@ function fn_compile_cats {
 
   # Setup CATs Config
   echo "{
-    \"api\": \"api.sys.${pcf_ert_domain}\",
+    \"api\": \"api.system.${pcf_ert_domain}\",
     \"apps_domain\": \"app.${pcf_ert_domain}\",
     \"admin_user\": \"${admin_user}\",
     \"admin_password\": \"${admin_password}\",
