@@ -72,7 +72,7 @@ function fn_compile_cats {
   # Setup CATs Config
   echo "{
     \"api\": \"api.system.${pcf_ert_domain}\",
-    \"apps_domain\": \"app.${pcf_ert_domain}\",
+    \"apps_domain\": \"apps.${pcf_ert_domain}\",
     \"admin_user\": \"${admin_user}\",
     \"admin_password\": \"${admin_password}\",
     \"skip_ssl_validation\": true,
