@@ -17,8 +17,8 @@ function fn_om_linux_curl {
     local curl_data=${3}
 
      curl_cmd="om-linux --target https://$OPSMAN_DOMAIN_OR_IP_ADDRESS -k \
-            --username \"$pcf_opsman_admin\" \
-            --password \"$pcf_opsman_admin_passwd\"  \
+            --username \"$PCF_OPSMAN_ADMIN\" \
+            --password \"$PCF_OPSMAN_ADMIN_PASSWORD\"  \
             curl \
             --request ${curl_method} \
             --path ${curl_path}"
