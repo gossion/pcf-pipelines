@@ -76,24 +76,20 @@ function fn_compile_cats {
     \"admin_user\": \"${admin_user}\",
     \"admin_password\": \"${admin_password}\",
     \"skip_ssl_validation\": true,
-    \"skip_regex\": \"lucid64\",
+    \"skip_regex\": \"lucid64|unsafe\",
     \"skip_diego_unsupported_tests\": true,
     \"artifacts_directory\": \"${root_path/pipeline-metadata}/\",
     \"java_buildpack_name\": \"java_buildpack_offline\",
     \"backend\": \"diego\",
     \"use_http\": false,
     \"enable_color\": true,
-    \"include_apps\": true,
-    \"include_backend_compatibility\": true,
-    \"include_detect\": true,
-    \"include_internet_dependent\": true,
-    \"include_route_services\": true,
-    \"include_routing\": true,
-    \"include_zipkin\": true,
-    \"include_ssh\": true,
-    \"include_security_groups\": true,
+    \"include_security_groups\": false,
     \"include_services\": true,
-    \"include_v3\": true
+    \"include_operator\": true,
+    \"include_logging\": true,
+    \"include_internet_dependent\": true,
+    \"cf_push_timeout\": 500,
+    \"default_timeout\": 500
   }" > integration_config.json
 
   export CONFIG=$PWD/integration_config.json
