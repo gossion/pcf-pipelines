@@ -5,6 +5,7 @@ set -ex
 cd terraform-state
   web_lb_public_ip=$(cat *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.web-lb-public-ip"] .primary .attributes .ip_address')
   pcf_ert_domain="${web_lb_public_ip}.cf.pcfazure.com"
+  OPSMAN_DOMAIN_OR_IP_ADDRESS=$(cat *.tfstate |  jq --raw-output '.modules[] .resources ["azurerm_public_ip.opsman-public-ip"] .primary .attributes .ip_address')
 cd -
 
 ### Function(s) ###
@@ -15,7 +16,7 @@ function fn_om_linux_curl {
     local curl_path=${2}
     local curl_data=${3}
 
-     curl_cmd="om-linux --target https://opsman.$pcf_ert_domain -k \
+     curl_cmd="om-linux --target https://$OPSMAN_DOMAIN_OR_IP_ADDRESS -k \
             --username \"$pcf_opsman_admin\" \
             --password \"$pcf_opsman_admin_passwd\"  \
             curl \
@@ -54,6 +55,9 @@ function fn_compile_cats {
   local admin_user=${1}
   local admin_password=${2}
 
+  wget https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
+  sudo tar -C /usr/local -xzf go*.tar.gz
+
   # Set Golang Path
   export PATH=$PATH:/usr/local/go/bin
 
@@ -68,7 +72,7 @@ function fn_compile_cats {
   # Setup CATs Config
   echo "{
     \"api\": \"api.sys.${pcf_ert_domain}\",
-    \"apps_domain\": \"cfapps.${pcf_ert_domain}\",
+    \"apps_domain\": \"app.${pcf_ert_domain}\",
     \"admin_user\": \"${admin_user}\",
     \"admin_password\": \"${admin_password}\",
     \"skip_ssl_validation\": true,
